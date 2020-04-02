@@ -251,7 +251,6 @@ function initBuffers(gl) {
         position: positionBuffer,
         color: colorBuffer,
         indices: indexBuffer,
-        vertexCount: positions.length/3
     };
 }
 
@@ -358,8 +357,9 @@ function drawScene(gl, programInfo, buffers, deltaTime) {
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indices);
     
     {
+        const vertexCount = 36; //Since each face of our cube is comprised of two triangles, there are 6 vertices per side, or 36 total vertices in the cube, even though many of them are duplicates.
+        const type = gl.UNSIGNED_SHORT;
         const offset = 0;
-        const vertexCount = buffers.vertexCount;
-        gl.drawArrays(gl.TRIANGLE_STRIP, offset, vertexCount);
+        gl.drawElements(gl.TRIANGLES, vertexCount, type, offset);
     }
 }
