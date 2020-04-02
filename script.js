@@ -237,6 +237,27 @@ function drawScene(gl, programInfo, buffers) {
     gl.enableVertexAttribArray(
         programInfo.attribLocations.vertexPosition);
     
+    //Load model colors
+    // Tell WebGL how to pull out the colors from the color buffer
+    // into the vertexColor attribute.
+    {
+        const numComponents = 4;    // pull out 4 values per iteration
+        const type = gl.FLOAT;      // the data in the buffer is 32bit floats
+        const normalize = false;    // don't normalize
+        const stride = 0;           // how many bytes to jump over
+        const offset = 0;           // how many bytes inside the buffer to start from
+        gl.bindBuffer(gl.ARRAY_BUFFER, buffers.color);
+        gl.vertexAttribPointer(
+            programInfo.attribLocations.vertexColor,
+            numComponents,
+            type,
+            normalize,
+            stride,
+            offset);
+        gl.enableVertexAttribArray(
+            programInfo.attribLocations.vertexColor);
+    }
+
     
     // Tell WebGL to use our program when drawing
     gl.useProgram(programInfo.program);
