@@ -34,12 +34,15 @@ function main() {
     */
     const vsSource = `
     attribute vec4 aVertexPosition;    //receives vertex position values on this attribute
+    attribute vec4 aVertexColor;       //receives vertex colors values on this attribute
 
     uniform mat4 uModelViewMatrix;      
     uniform mat4 uProjectionMatrix;
 
+    varying lowp vec4 vColor;
     void main() {
       gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
+      vColor = aVertexColor;
     }
     `;
 
