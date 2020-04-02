@@ -221,13 +221,26 @@ function initBuffers(gl) {
     // Now send the element array >indices< to GL
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,
         new Uint16Array(indices), gl.STATIC_DRAW);
+
+    /////Colors////////---------------------------------------
     //each color maps for one vertix from above
-    const colors = [
-        1.0, 1.0, 1.0, 1.0,    // white
-        1.0, 0.0, 0.0, 1.0,    // red
-        0.0, 1.0, 0.0, 1.0,    // green
-        0.0, 0.0, 1.0, 1.0,    // blue
+    const faceColors = [
+        [1.0, 1.0, 1.0, 1.0],    // Front face: white
+        [1.0, 0.0, 0.0, 1.0],    // Back face: red
+        [0.0, 1.0, 0.0, 1.0],    // Top face: green
+        [0.0, 0.0, 1.0, 1.0],    // Bottom face: blue
+        [1.0, 1.0, 0.0, 1.0],    // Right face: yellow
+        [1.0, 0.0, 1.0, 1.0],    // Left face: purple
     ];
+
+    // Convert the faces colors array into a table for all the vertices.
+    var colors = [];
+    for (var j = 0; j < faceColors.length; ++j) {
+        const c = faceColors[j];
+
+        // Repeat each color four times for the four vertices of the face
+        colors = colors.concat(c, c, c, c);
+    }
 
     const colorBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
