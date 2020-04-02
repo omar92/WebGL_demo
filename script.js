@@ -61,6 +61,31 @@ function main() {
     }
     `;
 
+
+    const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
+
+    //after creating the shaderProgramm we need to get refrence to the parametters inside the shader to send the data to it
+
+    var _vertexPosition = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
+    var _projectionMatrix= gl.getUniformLocation(shaderProgram, 'uProjectionMatrix');
+    var _modelViewMatrix = gl.getUniformLocation(shaderProgram, 'uModelViewMatrix');
+
+
+    //create simple opject to organize the data 
+    const programInfo = {
+        program: shaderProgram,
+        attribLocations: {
+            vertexPosition: _vertexPosition,
+        },
+        uniformLocations: {
+            projectionMatrix: _projectionMatrix,
+            modelViewMatrix: _modelViewMatrix,
+        },
+    };
+
+
+    
+
 } window.onload = main; // call main onLoad
 
 
