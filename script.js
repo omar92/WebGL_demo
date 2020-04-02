@@ -149,12 +149,44 @@ function initShaderProgram(gl, vsSource, fsSource) {
 
 function initBuffers(gl) {
 
+    /////positions////////---------------------------------------
     //create an array of positions for the square.
     const positions = [
-        -1.0, 1.0,
-        1.0, 1.0,
-        -1.0, -1.0,
-        1.0, -1.0,
+        // Front face
+        -1.0, -1.0, 1.0,
+        1.0, -1.0, 1.0,
+        1.0, 1.0, 1.0,
+        -1.0, 1.0, 1.0,
+
+        // Back face
+        -1.0, -1.0, -1.0,
+        -1.0, 1.0, -1.0,
+        1.0, 1.0, -1.0,
+        1.0, -1.0, -1.0,
+
+        // Top face
+        -1.0, 1.0, -1.0,
+        -1.0, 1.0, 1.0,
+        1.0, 1.0, 1.0,
+        1.0, 1.0, -1.0,
+
+        // Bottom face
+        -1.0, -1.0, -1.0,
+        1.0, -1.0, -1.0,
+        1.0, -1.0, 1.0,
+        -1.0, -1.0, 1.0,
+
+        // Right face
+        1.0, -1.0, -1.0,
+        1.0, 1.0, -1.0,
+        1.0, 1.0, 1.0,
+        1.0, -1.0, 1.0,
+
+        // Left face
+        -1.0, -1.0, -1.0,
+        -1.0, -1.0, 1.0,
+        -1.0, 1.0, 1.0,
+        -1.0, 1.0, -1.0,
     ];
 
     // Create a buffer for the square's positions.
@@ -185,7 +217,7 @@ function initBuffers(gl) {
     return {
         position: positionBuffer,
         color: colorBuffer,
-        vertexCount: positions.length/2
+        vertexCount: positions.length/3
     };
 }
 
@@ -238,7 +270,7 @@ function drawScene(gl, programInfo, buffers, deltaTime) {
     //Load the 3d model
     // Tell WebGL how to pull out the positions from the position buffer into the vertexPosition attribute.
     
-    const numComponents = 2;  // pull out 2 values per iteration
+    const numComponents = 3;  // pull out 3 values per iteration
     const type = gl.FLOAT;    // the data in the buffer is 32bit floats
     const normalize = false;  // don't normalize
     const stride = 0;         // how many bytes to jump over
