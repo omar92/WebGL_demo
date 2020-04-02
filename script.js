@@ -172,8 +172,7 @@ function drawScene(gl, programInfo, buffers) {
 
     // Create a perspective matrix >>Camera<<,
     //a special matrix that is used to simulate the distortion of perspective in a camera.
-    // Our field of view is 45 degrees, with a width/height ratio that matches the display size of the canvas and we only want to see objects between 0.1 units and 100 units away from the camera.
-    
+    // Our field of view is 45 degrees, with a width/height ratio that matches the display size of the canvas and we only want to see objects between 0.1 units and 100 units away from the camera. 
     const fieldOfView = 45 * Math.PI / 180;   // in radians
     const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
     const zNear = 0.1;
@@ -187,5 +186,14 @@ function drawScene(gl, programInfo, buffers) {
         zNear,
         zFar);
     
-
+    
+    //>>Transform<<
+    // Set the drawing position to the "identity" point, which is the center of the scene.
+    const modelViewMatrix = mat4.create();
+    
+    // Now move the drawing position a bit to where we want to start drawing the square.
+    mat4.translate(modelViewMatrix,     // destination matrix
+        modelViewMatrix,     // matrix to translate
+        [-0.0, 0.0, -6.0]);  // amount to translate  >> transform.Position<<
+    
 }
