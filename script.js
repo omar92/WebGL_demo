@@ -1,4 +1,4 @@
-var squareRotation = 0.0;
+var cubeRotation = 0.0;
 
 //
 // script entry point
@@ -295,11 +295,11 @@ function drawScene(gl, programInfo, buffers, deltaTime) {
         modelViewMatrix,     // matrix to translate
         [-0.0, 0.0, -6.0]);  // amount to translate  >> transform.Position<<
     
-    squareRotation += deltaTime;
+    cubeRotation += deltaTime;
     mat4.rotate(modelViewMatrix,  // destination matrix
         modelViewMatrix,  // matrix to rotate
-        squareRotation,   // amount to rotate in radians
-        [0, 0, 1]);       // axis to rotate around
+        cubeRotation * 2,   // amount to rotate in radians
+        [1, 0, 1]);       // axis to rotate around
 
     //Load the 3d model
     // Tell WebGL how to pull out the positions from the position buffer into the vertexPosition attribute.
