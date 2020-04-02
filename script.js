@@ -79,7 +79,18 @@ function main() {
 
     var cubeBuffer = initBuffers(gl);
 
-    drawScene(gl, programInfo, cubeBuffer);
+    var then = 0;
+    // Draw the scene repeatedly
+    function render(now) {
+        now *= 0.001;  // convert to seconds
+        const deltaTime = now - then;
+        then = now;
+
+        drawScene(gl, programInfo, cubeBuffer, deltaTime);
+
+        requestAnimationFrame(render);
+    }
+    requestAnimationFrame(render);
 
 } window.onload = main; // call main onLoad
 
@@ -179,7 +190,7 @@ function initBuffers(gl) {
 }
 
 
-function drawScene(gl, programInfo, buffers) {
+function drawScene(gl, programInfo, buffers, deltaTime) {
     gl.clearColor(0.0, 0.0, 0.0, 1.0);  // Clear to black, fully opaque
     gl.clearDepth(1.0);                 // Clear everything
     gl.enable(gl.DEPTH_TEST);           // Enable depth testing
@@ -218,6 +229,7 @@ function drawScene(gl, programInfo, buffers) {
         modelViewMatrix,     // matrix to translate
         [-0.0, 0.0, -6.0]);  // amount to translate  >> transform.Position<<
     
+    squareRotation += deltaTime;
     mat4.rotate(modelViewMatrix,  // destination matrix
         modelViewMatrix,  // matrix to rotate
         squareRotation,   // amount to rotate in radians
