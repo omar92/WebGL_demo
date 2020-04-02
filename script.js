@@ -201,6 +201,26 @@ function initBuffers(gl) {
         new Float32Array(positions),
         gl.STATIC_DRAW);
     
+    
+    /////indices////////---------------------------------------
+    // This array defines each face as two triangles, using the
+    // indices into the vertex array to specify each triangle's
+    // position.
+    const indices = [
+        0, 1, 2, 0, 2, 3,    // front
+        4, 5, 6, 4, 6, 7,    // back
+        8, 9, 10, 8, 10, 11,   // top
+        12, 13, 14, 12, 14, 15,   // bottom
+        16, 17, 18, 16, 18, 19,   // right
+        20, 21, 22, 20, 22, 23,   // left
+    ];
+    
+    const indexBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+    
+    // Now send the element array >indices< to GL
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,
+        new Uint16Array(indices), gl.STATIC_DRAW);
     //each color maps for one vertix from above
     const colors = [
         1.0, 1.0, 1.0, 1.0,    // white
@@ -217,6 +237,7 @@ function initBuffers(gl) {
     return {
         position: positionBuffer,
         color: colorBuffer,
+        indices: indexBuffer,
         vertexCount: positions.length/3
     };
 }
@@ -319,6 +340,9 @@ function drawScene(gl, programInfo, buffers, deltaTime) {
         programInfo.uniformLocations.modelViewMatrix,
         false,
         modelViewMatrix);
+    
+    // Tell WebGL which indices to use to index the vertices
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indices);
     
     {
         const offset = 0;
