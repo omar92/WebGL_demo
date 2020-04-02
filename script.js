@@ -17,12 +17,6 @@ function main() {
         return;
     }
 
-    // Set clear color to black, fully opaque
-    gl.clearColor(0.0, 0.0, 2.0, 1.0);
-    // Clear the color buffer with specified clear color
-    gl.clear(gl.COLOR_BUFFER_BIT); 
-
-
     /// The shaders  /////////////////////////////////////////////////////////////////////////////
     /* 
     A shader is a program, written using the OpenGL ES Shading Language (GLSL),
@@ -78,12 +72,9 @@ function main() {
 
     var cubeBuffer = initBuffers(gl);
 
-
-
+    drawScene(gl, programInfo, cubeBuffer);
 
 } window.onload = main; // call main onLoad
-
-
 
 
 //
@@ -138,8 +129,6 @@ function initShaderProgram(gl, vsSource, fsSource) {
 }
 
 
-
-
 function initBuffers(gl) {
 
     //create an array of positions for the square.
@@ -168,4 +157,15 @@ function initBuffers(gl) {
 }
 
 
-    
+function drawScene(gl, programInfo, buffers) {
+    gl.clearColor(0.0, 0.0, 0.0, 1.0);  // Clear to black, fully opaque
+    gl.clearDepth(1.0);                 // Clear everything
+    gl.enable(gl.DEPTH_TEST);           // Enable depth testing
+    gl.depthFunc(gl.LEQUAL);            // Near things obscure far things
+
+    // Clear the canvas before we start drawing on it.
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    //start drawing
+
+}
